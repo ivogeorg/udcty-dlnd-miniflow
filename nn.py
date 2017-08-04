@@ -11,16 +11,26 @@ build a network that solves the equation below?
 
 from miniflow import *
 
-x, y = Input(), Input()
+t, u, v, w, x, y, z = Input(), Input(), Input(), Input(), Input(), Input(), Input()
 
-f = Add(x, y)
-g = Add(f, y)
+f = Add(y, z)
+g = Add(f, u, v)
+i = Mul(g, w, x)
+h = Mul(i, t)
 
-feed_dict = {x: 10, y: 5}
+feed_dict = {t: 3, u: 13, v: 7, w: 12, x: 10, y: 5, z: 8}
 
 sorted_nodes = topological_sort(feed_dict)
-output = forward_pass(g, sorted_nodes)
+output = forward_pass(h, sorted_nodes)
 
 # NOTE: because topological_sort set the values for the `Input` nodes we could also access
 # the value for x with x.value (same goes for y).
-print("{} + {} = {} (according to miniflow)".format(feed_dict[x], feed_dict[y], output))
+print("({} + {} + {} + {}) * {} * {} * {} = {} (according to miniflow)".format(
+    feed_dict[y],
+    feed_dict[z],
+    feed_dict[u],
+    feed_dict[v],
+    feed_dict[w],
+    feed_dict[x],
+    feed_dict[t],
+    output))
